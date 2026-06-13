@@ -1,10 +1,14 @@
 import { EditorView, keymap, lineNumbers } from "@codemirror/view";
-import { EditorState } from "@codemirror/state";
+import { EditorState, Extension } from "@codemirror/state";
 import { markdown } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 
-export const createEditorState = (doc: string, onChange: (val: string) => void): EditorState => {
+export function createEditorState(
+  doc: string,
+  onChange: (val: string) => void,
+  extensions: Extension[] = []
+): EditorState {
   return EditorState.create({
     doc,
     extensions: [
@@ -21,6 +25,7 @@ export const createEditorState = (doc: string, onChange: (val: string) => void):
         ".cm-scroller": { fontFamily: "var(--font-mono)", overflow: "auto" },
         ".cm-content": { padding: "16px", caretColor: "var(--accent)" },
       }),
+      ...extensions,
     ],
   });
-};
+}
